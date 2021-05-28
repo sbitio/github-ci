@@ -28,9 +28,9 @@ jobs:
         env:
           GITHUB_REF: github.ref
         run: |
-          if [${GITHUB_REF} = 'refs/heads/dev']; then
+          if [ ${GITHUB_REF} = 'refs/heads/dev' ]; then
             $JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-devel"
-          elif [${GITHUB_REF} = 'refs/heads/production']; then
+          elif [ ${GITHUB_REF} = 'refs/heads/production' ]; then
             $JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-staging"
           fi
       -
