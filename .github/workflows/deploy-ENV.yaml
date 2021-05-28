@@ -26,7 +26,7 @@ jobs:
       -
         name: Decide which Jenkins job to run
         env:
-          GITHUB_REF: github.ref
+          GITHUB_REF: "github.ref"
         run: |
           if ["$GITHUB_REF" = "refs/heads/dev"]; then
             $JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-devel"
