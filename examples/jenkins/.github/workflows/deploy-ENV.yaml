@@ -35,7 +35,7 @@ jobs:
           fi
       -
         name: Trigger Jenkins Job
-        if: JENKINS_JOB != 'placeholder'
+        if: ${{ env.JENKINS_JOB }} != 'placeholder'
         uses: docker://registry.gitlab.com/sbitio/gitlab-ci:latest
         env:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
