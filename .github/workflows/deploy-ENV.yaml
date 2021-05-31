@@ -28,7 +28,6 @@ jobs:
           job_for_dev: admin/dev/sbitio-github/deploy-ENV/deploy-devel
           job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
         run: |
-          echo "${GITHUB_REF##r*/}" >> $branch
           echo "job_for_${GITHUB_REF##r*/}"
           echo "JENKINS_JOB={job_for_${GITHUB_REF##r*/}}">> $GITHUB_ENV
       -
