@@ -8,8 +8,9 @@ Templates and examples for Github-CI
 
 * `examples/jenkins/.github/workflows/deploy-ENV.yaml`: Github Actions to build Jenkins jobs
 
-## Using Github Actions to trigger the Jenkins jobs `deploy_devel` and `deploy_staging`
+---
 
+### Using Github Actions to trigger the Jenkins jobs `deploy_devel` and `deploy_staging`
 ### Instructions
 
 1. Copy and paste the `.github` folder inside `examples/jenkins` to your repository and create the `dev` and `production` branches if they do not exist.
