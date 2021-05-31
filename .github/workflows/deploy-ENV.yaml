@@ -17,8 +17,6 @@ jobs:
     name: Launch jenkins deploy-ENV job
     runs-on: ubuntu-latest
     env:
-      JENKINS_JOB: placeholder
-##    environment: https://jenkins.sbit.io/
     steps:
       -
         name: Check out repository
@@ -28,12 +26,11 @@ jobs:
         id: decide_jenkins_job
         env:
           GITHUB_REF: github.ref
+          job_for_dev: admin/dev/sbitio-github/deploy-ENV/deploy-devel
+          job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
         run: |
-          if [ ${GITHUB_REF} = 'refs/heads/dev' ]; then
-            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-devel" >> $GITHUB_ENV
-          elif [ ${GITHUB_REF} = 'refs/heads/production' ]; then
-            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-staging" >> $GITHUB_ENV
-          fi
+          echo $GITHUB_REF
+          
       -
         name: Trigger Jenkins Job
         if: ${{ env.JENKINS_JOB }} != 'placeholder'
@@ -52,3 +49,10 @@ jobs:
 #          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
 #        with:
 #          args: "-h https://jenkins.sbit.io/ -j admin/dev/sbitio-github/deploy-ENV/deploy-staging"
+
+#        run: |
+#          if [ ${GITHUB_REF} = 'refs/heads/dev' ]; then
+#            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-devel" >> $GITHUB_ENV
+#          elif [ ${GITHUB_REF} = 'refs/heads/production' ]; then
+#            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-staging" >> $GITHUB_ENV
+#          fi
