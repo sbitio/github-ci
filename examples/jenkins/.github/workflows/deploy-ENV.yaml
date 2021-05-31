@@ -5,9 +5,7 @@ name: deploy_ENV
 on:
   push:
     branches:
-      ## Execute deploy-devel
       - dev
-      ## Execute deploy-stg
       - production
 
 jobs:
@@ -15,37 +13,24 @@ jobs:
     name: Launch jenkins deploy-ENV job
     runs-on: ubuntu-latest
     env:
-      JENKINS_JOB: placeholder
-##    environment: https://jenkins.sbit.io/
+      GITHUB_REF: github.ref
+      job_for_dev: admin/dev/sbitio-github/deploy-ENV/deploy-devel
+      job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
     steps:
       -
         name: Check out repository
         uses: actions/checkout@v2
       -
+        name: Find pushed branch
+        run: echo "JENKINS_JOB_AUX={job_for_${GITHUB_REF##r*/}}">> $GITHUB_ENV
+      -
         name: Decide which Jenkins job to run
-        env:
-          GITHUB_REF: github.ref
-        run: |
-          if [ ${GITHUB_REF} = 'refs/heads/dev' ]; then
-            $JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-devel"
-          elif [ ${GITHUB_REF} = 'refs/heads/production' ]; then
-            $JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-staging"
-          fi
+        run: echo "JENKINS_JOB=$${{ env.JENKINS_JOB_AUX }}">> $GITHUB_ENV
       -
         name: Trigger Jenkins Job
-        if: ${{ env.JENKINS_JOB }} != 'placeholder'
         uses: docker://registry.gitlab.com/sbitio/gitlab-ci:latest
         env:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         with:
           args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ env.JENKINS_JOB }}"
-#      -
-#        name: Trigger Jenkins Job deploy-STG
-#        if: github.ref == 'refs/heads/production'
-#        uses: docker://registry.gitlab.com/sbitio/gitlab-ci:latest
-#        env:
-#          JENKINS_USER: ${{ secrets.JENKINS_USER }}
-#          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
-#        with:
-#          args: "-h https://jenkins.sbit.io/ -j admin/dev/sbitio-github/deploy-ENV/deploy-staging"
