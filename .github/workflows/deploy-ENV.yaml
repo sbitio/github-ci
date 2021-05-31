@@ -30,9 +30,9 @@ jobs:
           GITHUB_REF: github.ref
         run: |
           if [ ${GITHUB_REF} = 'refs/heads/dev' ]; then
-            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-devel" >> $JENKINS_JOB
+            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-devel" >> $JENKINS_JOBS
           elif [ ${GITHUB_REF} = 'refs/heads/production' ]; then
-            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-staging" >> $JENKINS_JOB
+            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-staging" >> $JENKINS_JOBS
           fi
       -
         name: Trigger Jenkins Job
@@ -42,7 +42,7 @@ jobs:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         with:
-          args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ env.JENKINS_JOB }}"
+          args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ env.JENKINS_JOBS }}"
 #      -
 #        name: Trigger Jenkins Job deploy-STG
 #        if: github.ref == 'refs/heads/production'
