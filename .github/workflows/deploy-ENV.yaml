@@ -32,7 +32,7 @@ jobs:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         with:
-          args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ secret.JENKINS_JOB }}"
+          args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ secrets.JENKINS_JOB }}"
   launch_jenkins_deploy_stg:
     name: Launch jenkins deploy-ENV job
     runs-on: ubuntu-latest
@@ -52,4 +52,4 @@ jobs:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         with:
-          args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ secret.JENKINS_JOB }}"
+          args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ secrets.JENKINS_JOB }}"
