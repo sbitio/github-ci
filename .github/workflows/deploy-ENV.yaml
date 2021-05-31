@@ -29,7 +29,7 @@ jobs:
           job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
         run: |
           echo ${GITHUB_REF##r*/}
-          echo "JENKINS_JOB=$job_for_${{ env.GITHUB_REF##r*/ }}">> $GITHUB_ENV
+          echo "JENKINS_JOB=$job_for_${GITHUB_REF##r*/}">> $GITHUB_ENV
       -
         name: Trigger Jenkins Job
         if: ${{ env.JENKINS_JOB }} != 'placeholder'
