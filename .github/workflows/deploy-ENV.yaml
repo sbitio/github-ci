@@ -29,9 +29,9 @@ jobs:
           GITHUB_REF: github.ref
         run: |
           if [ ${GITHUB_REF} = 'refs/heads/dev' ]; then
-            env.JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-devel"
+            $env.JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-devel"
           elif [ ${GITHUB_REF} = 'refs/heads/production' ]; then
-            env.JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-staging"
+            $env.JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-staging"
           fi
       -
         name: Trigger Jenkins Job
