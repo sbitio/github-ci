@@ -30,7 +30,7 @@ jobs:
         run: |
           echo $GITHUB_REF
           readarray -d / -t ref_components <<< $GITHUB_REF
-          branch = $ref_components[2]
+          $branch = $ref_components[2]
           echo "JENKINS_JOB=${ job_for_$branch" >> $GITHUB_ENV
       -
         name: Trigger Jenkins Job
