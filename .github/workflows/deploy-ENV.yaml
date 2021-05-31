@@ -25,13 +25,14 @@ jobs:
         uses: actions/checkout@v2
       -
         name: Decide which Jenkins job to run
+        id: decide_jenkins_job
         env:
           GITHUB_REF: github.ref
         run: |
           if [ ${GITHUB_REF} = 'refs/heads/dev' ]; then
-            $JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-devel"
+            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-devel" >> $JENKINS_JOB
           elif [ ${GITHUB_REF} = 'refs/heads/production' ]; then
-            $JENKINS_JOB = "admin/dev/sbitio-github/deploy-ENV/deploy-staging"
+            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-staging" >> $JENKINS_JOB
           fi
       -
         name: Trigger Jenkins Job
