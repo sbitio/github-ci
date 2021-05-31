@@ -17,21 +17,20 @@ jobs:
     name: Launch jenkins deploy-ENV job
     runs-on: ubuntu-latest
     env:
-      placeholder: test
+      GITHUB_REF: github.ref
+      job_for_dev: admin/dev/sbitio-github/deploy-ENV/deploy-devel
+      job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
     steps:
       -
         name: Check out repository
         uses: actions/checkout@v2
       -
+        name: Find pushed branch
+        run: echo "JENKINS_JOB_AUX={job_for_${GITHUB_REF##r*/}}">> $GITHUB_ENV
+      -
         name: Decide which Jenkins job to run
-        id: decide_jenkins_job
-        env:
-          GITHUB_REF: github.ref
-          job_for_dev: admin/dev/sbitio-github/deploy-ENV/deploy-devel
-          job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
         run: |
-          echo "$job_for_${GITHUB_REF##r*/}"
-          echo "JENKINS_JOB={job_for_${GITHUB_REF##r*/}}">> $GITHUB_ENV
+          echo "JENKINS_JOB=$${{ JENKINS_JOB_AUX }}">> $GITHUB_ENV
       -
         name: Trigger Jenkins Job
         if: ${{ env.JENKINS_JOB }} != 'placeholder'
