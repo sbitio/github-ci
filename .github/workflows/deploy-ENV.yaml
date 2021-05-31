@@ -30,7 +30,7 @@ jobs:
         run: |
           echo $GITHUB_REF
           readarray -d / -t branch <<< $GITHUB_REF
-          echo "JENKINS_JOB=${{ job_for_${{ branch[2] }}" }}>> $GITHUB_ENV
+          echo "JENKINS_JOB=${{job_for_${{ branch[2] }} }}">> $GITHUB_ENV
       -
         name: Trigger Jenkins Job
         if: ${{ env.JENKINS_JOB }} != 'placeholder'
