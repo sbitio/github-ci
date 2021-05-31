@@ -30,7 +30,7 @@ jobs:
       -
         name: Decide which Jenkins job to run
         run: |
-          echo "JENKINS_JOB=$${{ JENKINS_JOB_AUX }}">> $GITHUB_ENV
+          echo "JENKINS_JOB=$${{ env.JENKINS_JOB_AUX }}">> $GITHUB_ENV
       -
         name: Trigger Jenkins Job
         if: ${{ env.JENKINS_JOB }} != 'placeholder'
