@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       JENKINS_JOB: placeholder
-    environment: dev
+    environment: stg
     if: github.ref == 'refs/heads/production'
     steps:
       -
