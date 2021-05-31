@@ -1,0 +1,55 @@
+## Github actions to execute jobs based on branch
+## TODO
+## Añadir new step que comprueba en que rama se esta pusheando el job y a partir de ello darle valor a JENKINS_JOB
+##
+name: deploy_ENV
+
+on:
+  push:
+    branches:
+      ## Execute deploy-devel
+      - dev
+      ## Execute deploy-stg
+      - production
+
+jobs:
+  launch_jenkins_deploy_dev:
+    name: Launch jenkins deploy-ENV job
+    runs-on: ubuntu-latest
+    env:
+      JENKINS_JOB: placeholder
+    environment: dev
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      -
+        name: Check out repository
+        uses: actions/checkout@v2
+      -
+        name: Trigger Jenkins Job
+        if: ${{ env.JENKINS_JOB }} != 'placeholder'
+        uses: docker://registry.gitlab.com/sbitio/gitlab-ci:latest
+        env:
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+        with:
+          args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ secret.JENKINS_JOB }}"
+  launch_jenkins_deploy_stg:
+    name: Launch jenkins deploy-ENV job
+    runs-on: ubuntu-latest
+    env:
+      JENKINS_JOB: placeholder
+    environment: stg
+    if: github.ref == 'refs/heads/production'
+    steps:
+      -
+        name: Check out repository
+        uses: actions/checkout@v2
+      -
+        name: Trigger Jenkins Job
+        if: ${{ env.JENKINS_JOB }} != 'placeholder'
+        uses: docker://registry.gitlab.com/sbitio/gitlab-ci:latest
+        env:
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+        with:
+          args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ secret.JENKINS_JOB }}"
