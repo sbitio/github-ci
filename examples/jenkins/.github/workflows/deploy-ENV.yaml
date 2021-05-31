@@ -1,7 +1,5 @@
 ## Github actions to execute jobs based on branch
-## TODO
-## Añadir new step que comprueba en que rama se esta pusheando el job y a partir de ello darle valor a JENKINS_JOB
-##
+
 name: deploy_ENV
 
 on:
