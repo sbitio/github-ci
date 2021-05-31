@@ -29,7 +29,11 @@ jobs:
           job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
         run: |
           echo $GITHUB_REF
-          echo
+          readarray -d / -t branch <<< $GITHUB_REF
+          for (( n=0; n < ${#branch[*]}; n++))
+          do
+            echo "${branch[n]}"
+          done
       -
         name: Trigger Jenkins Job
         if: ${{ env.JENKINS_JOB }} != 'placeholder'
