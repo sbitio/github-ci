@@ -25,12 +25,12 @@ jobs:
         id: decide_jenkins_job
         env:
           GITHUB_REF: github.ref
-          job_for_dev: admin/dev/sbitio-github/deploy-ENV/deploy-devel
-          job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
         run: |
-          echo "${GITHUB_REF##r*/}" >> $branch
-          echo "job_for_${{ branch }}"
-          echo "JENKINS_JOB={$job_for_${GITHUB_REF##r*/}}">> $GITHUB_ENV
+          if [ ${GITHUB_REF} = 'refs/heads/dev' ]; then
+            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-devel" >> $GITHUB_ENV
+          elif [ ${GITHUB_REF} = 'refs/heads/production' ]; then
+            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-staging" >> $GITHUB_ENV
+          fi
       -
         name: Trigger Jenkins Job
         if: ${{ env.JENKINS_JOB }} != 'placeholder'
@@ -40,19 +40,3 @@ jobs:
           JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
         with:
           args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ env.JENKINS_JOB }}"
-#      -
-#        name: Trigger Jenkins Job deploy-STG
-#        if: github.ref == 'refs/heads/production'
-#        uses: docker://registry.gitlab.com/sbitio/gitlab-ci:latest
-#        env:
-#          JENKINS_USER: ${{ secrets.JENKINS_USER }}
-#          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
-#        with:
-#          args: "-h https://jenkins.sbit.io/ -j admin/dev/sbitio-github/deploy-ENV/deploy-staging"
-
-#        run: |
-#          if [ ${GITHUB_REF} = 'refs/heads/dev' ]; then
-#            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-devel" >> $GITHUB_ENV
-#          elif [ ${GITHUB_REF} = 'refs/heads/production' ]; then
-#            echo "JENKINS_JOB=admin/dev/sbitio-github/deploy-ENV/deploy-staging" >> $GITHUB_ENV
-#          fi
