@@ -16,7 +16,6 @@ jobs:
   launch_jenkins_deploy:
     name: Launch jenkins deploy-ENV job
     runs-on: ubuntu-latest
-    env:
     steps:
       -
         name: Check out repository
@@ -30,7 +29,7 @@ jobs:
           job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
         run: |
           echo $GITHUB_REF
-          
+          echo
       -
         name: Trigger Jenkins Job
         if: ${{ env.JENKINS_JOB }} != 'placeholder'
