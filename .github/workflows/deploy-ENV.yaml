@@ -13,15 +13,18 @@ jobs:
     name: Launch jenkins deploy-ENV job
     runs-on: ubuntu-latest
     env:
-      GITHUB_REF: ${{ github.ref##r*/ }}
+      GITHUB_REF: github.ref
 #      job_for_dev: admin/dev/sbitio-github/deploy-ENV/deploy-devel
 #      job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
     steps:
       -
+        name: Find pushed branch
+        run: echo "JENKINS_JOB_AUX={job_for_${GITHUB_REF##r*/}}">> $GITHUB_ENV
+      -
         name: Decide Jenkins job to run
         uses: kanga333/variable-mapper@master
         with:
-          key: ${{ env.GITHUB_REF }}
+          key: ${{ env.JENKINS_JOB_AUX }}
           map: |
             {
               "dev": {
