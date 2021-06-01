@@ -13,7 +13,7 @@ jobs:
     name: Launch jenkins deploy-ENV job
     runs-on: ubuntu-latest
     env:
-      GITHUB_REF: github.ref
+      GITHUB_REF: ${github.ref##r*/}
 #      job_for_dev: admin/dev/sbitio-github/deploy-ENV/deploy-devel
 #      job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
     steps:
@@ -21,7 +21,7 @@ jobs:
         name: Decide Jenkins job to run
         uses: kanga333/variable-mapper@master
         with:
-          key: "${{github.base_ref}}"
+          key: ${{ env.GITHUB_REF }}
           map: |
             {
               "dev": {
