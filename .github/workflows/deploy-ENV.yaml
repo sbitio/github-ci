@@ -25,7 +25,6 @@ jobs:
         run: echo "JENKINS_JOB=$${{ env.JENKINS_JOB_AUX }}">> $GITHUB_ENV
       -
         name: Trigger Jenkins Job
-        if: ${{ env.JENKINS_JOB }} != 'placeholder'
         uses: docker://registry.gitlab.com/sbitio/gitlab-ci:latest
         env:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
