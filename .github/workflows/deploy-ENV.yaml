@@ -18,9 +18,6 @@ jobs:
       job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
     steps:
       -
-        name: Check out repository
-        uses: actions/checkout@v2
-      -
         name: Find pushed branch
         run: echo "JENKINS_JOB_AUX={job_for_${GITHUB_REF##r*/}}">> $GITHUB_ENV
       -
