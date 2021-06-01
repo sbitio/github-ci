@@ -24,7 +24,7 @@ jobs:
         name: Decide Jenkins job to run
         uses: kanga333/variable-mapper@master
         with:
-          key: ${{ env.JENKINS_JOB_AUX }}
+          key: github.ref
           map: |
             {
               "dev": {
