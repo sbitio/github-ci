@@ -12,17 +12,21 @@ jobs:
   launch_jenkins_deploy:
     name: Launch jenkins deploy-ENV job
     runs-on: ubuntu-latest
-    env:
-      GITHUB_REF: github.ref
-      job_for_dev: admin/dev/sbitio-github/deploy-ENV/deploy-devel
-      job_for_production: admin/dev/sbitio-github/deploy-ENV/deploy-staging
     steps:
       -
-        name: Find pushed branch
-        run: echo "JENKINS_JOB_AUX={job_for_${GITHUB_REF##r*/}}">> $GITHUB_ENV
-      -
-        name: Decide which Jenkins job to run
-        run: echo "JENKINS_JOB=$${{ env.JENKINS_JOB_AUX }}">> $GITHUB_ENV
+        name: Decide Jenkins job to run
+        uses: kanga333/variable-mapper@master
+        with:
+          key: ${{ github.ref }}
+          map: |
+            {
+              "dev": {
+                "JENKINS_JOB": "${{ secrets.JENKINS_JOB_DEV }}"
+              },
+              "production": {
+                "JENKINS_JOB": "${{ secrets.JENKINS_JOB_STG }}"
+              }
+            }
       -
         name: Trigger Jenkins Job
         uses: docker://registry.gitlab.com/sbitio/gitlab-ci:latest
