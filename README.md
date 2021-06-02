@@ -6,7 +6,7 @@ Templates and examples for Github-CI
 
 ### Examples
 
-* `examples/jenkins/.github/workflows/deploy-ENV.yaml`: Github Actions to build Jenkins jobs
+* `examples/jenkins/.github/workflows/deploy-ENV.yaml`: Github Actions to build Jenkins job `deploy-ENV`
 
 ---
 

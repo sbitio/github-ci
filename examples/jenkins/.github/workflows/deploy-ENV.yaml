@@ -29,9 +29,9 @@ jobs:
             }
       -
         name: Trigger Jenkins Job
-        uses: docker://registry.gitlab.com/sbitio/gitlab-ci:latest
-        env:
+        uses: sbitio/trigger-jenkins-job@v1.1
+        with:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
           JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
-        with:
-          args: "-h ${{ secrets.JENKINS_HOST }} -j ${{ env.JENKINS_JOB }}"
+          JENKINS_HOST: ${{ secrets.JENKINS_HOST }}
+          JENKINS_JOB: ${{ env.JENKINS_JOB }}
