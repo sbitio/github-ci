@@ -6,6 +6,7 @@ on: pull_request
 
 env:
   JENKINS_PARAMS: branch='stage'
+  JENKINS_HOST: https://jenkins.bodeboca.com/
 
 jobs:
   launch_jenkins_deploy:
