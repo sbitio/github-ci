@@ -1,0 +1,19 @@
+## Github actions to execute jobs based on branch
+
+name: deploy_ENV
+
+on: pull_request
+
+jobs:
+  launch_jenkins_deploy:
+    name: Launch jenkins deploy-ENV job
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Trigger Jenkins Job
+        uses: sbitio/trigger-jenkins-job@v1.2
+        with:
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+          JENKINS_HOST: ${{ secrets.JENKINS_HOST }}
+          JENKINS_JOB: ${{ secrets.JENKINS_JOB }}
