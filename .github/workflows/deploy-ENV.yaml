@@ -2,11 +2,7 @@
 
 name: deploy_ENV
 
-on:
-  push:
-    branches:
-      - dev
-      - production
+on: pull_request
 
 jobs:
   launch_jenkins_deploy:
