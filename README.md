@@ -19,3 +19,4 @@ Templates and examples for Github-CI
   * The value of `JENKINS_USER` must be the same as the user who generated the `JENKINS_TOKEN`
   * `JENKINS_HOST` is the host of the Jenkins instance where the jobs will be built
   * `JENKINS_JOB_ENV` is the Jenkins route to the job
+..
