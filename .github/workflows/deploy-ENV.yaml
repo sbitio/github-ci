@@ -5,7 +5,7 @@ name: deploy_ENV
 on:
   push:
     branches:
-      - dev
+#      - dev
       - production
 
 jobs:
