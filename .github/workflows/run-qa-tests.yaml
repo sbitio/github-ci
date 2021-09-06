@@ -5,7 +5,7 @@ name: deploy_ENV
 on: pull_request
 
 env:
-  JENKINS_PARAMS: branch="stage"
+  JENKINS_PARAMS: branch=stage
 
 jobs:
   launch_jenkins_deploy:
