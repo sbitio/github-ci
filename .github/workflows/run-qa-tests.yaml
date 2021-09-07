@@ -1,0 +1,29 @@
+## Github actions to execute jobs based on branch
+
+name: deploy_ENV
+
+on: pull_request
+
+env:
+  GITHUB_ORIGIN_REF: github.head_ref
+  GITHUB_TARGET_REF: github.base_ref
+#  JENKINS_PARAMS: branch=github.head_ref
+  JENKINS_HOST: https://jenkins.bodeboca.com
+
+jobs:
+  launch_jenkins_deploy:
+    name: Launch jenkins deploy-ENV job
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Select branch where qa tests will be run
+        run: echo "JENKINS_PARAMS=branch=${{ github.head_ref }}" >> $GITHUB_ENV
+      -
+        name: Trigger Jenkins Job
+        uses: sbitio/trigger-jenkins-job@v1.2
+        with:
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+          JENKINS_HOST: ${{ env.JENKINS_HOST }}
+          JENKINS_JOB: ${{ secrets.JENKINS_JOB }}
+          JENKINS_PARAMS: ${{ env.JENKINS_PARAMS }}
