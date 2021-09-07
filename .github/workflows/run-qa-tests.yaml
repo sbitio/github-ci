@@ -16,7 +16,7 @@ jobs:
     steps:
       -
         name: Select branch where qa tests will be run
-        run: echo "JENKINS_PARAMS=branch=${GITHUB_REF##r*/}" >> $GITHUB_ENV
+        run: echo "JENKINS_PARAMS=branch=${GITHUB_ORIGIN_REF##r*/}" >> $GITHUB_ENV
       -
         name: Trigger Jenkins Job
         uses: sbitio/trigger-jenkins-job@v1.2
