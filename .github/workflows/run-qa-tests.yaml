@@ -5,6 +5,7 @@ name: deploy_ENV
 on: pull_request
 
 env:
+  GITHUB_REF: github.ref
   JENKINS_HOST: https://jenkins.bodeboca.com
 
 jobs:
