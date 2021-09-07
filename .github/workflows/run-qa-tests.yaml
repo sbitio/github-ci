@@ -5,7 +5,8 @@ name: deploy_ENV
 on: pull_request
 
 env:
-  GITHUB_REF: github.ref
+  GITHUB_ORIGIN_REF: github.head_ref
+  GITHUB_TARGET_REF: github.base_ref
   JENKINS_HOST: https://jenkins.bodeboca.com
 
 jobs:
@@ -15,7 +16,7 @@ jobs:
     steps:
       -
         name: Select branch where qa tests will be run
-        run: echo "JENKINS_PARAMS=branch=${GITHUB_REF##r*/}" >> GITHUB_ENV
+        run: echo "JENKINS_PARAMS=branch=${GITHUB_REF##r*/}" >> $GITHUB_ENV
       -
         name: Trigger Jenkins Job
         uses: sbitio/trigger-jenkins-job@v1.2
