@@ -1,0 +1,28 @@
+## Github action to execute admin/seed on push to production branch
+
+name: run-jenkins-seed
+
+on:
+  push:
+    branches:
+      - production
+
+env:
+  JENKINS_HOST: https://jenkins.hostname.com
+  JENKINS_PARAMS: no
+  BB_JENKINS_JOB_DEPLOY_PRODUCTION: admin/seed
+
+jobs:
+  launch_jenkins_deploy:
+    name: Launch jenkins deploy-ENV job
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Trigger Jenkins Job
+        uses: sbitio/trigger-jenkins-job@v1.2
+        with:
+          JENKINS_USER: ${{ secrets.BB_JENKINS_USER }}
+          JENKINS_TOKEN: ${{ secrets.BB_JENKINS_TOKEN }}
+          JENKINS_HOST: ${{ env.JENKINS_HOST }}
+          JENKINS_JOB: ${{ env.BB_JENKINS_JOB_DEPLOY_PRODUCTION }}
+          JENKINS_PARAMS: ${{ env.JENKINS_PARAMS }}
